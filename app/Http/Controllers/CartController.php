@@ -6,17 +6,14 @@ use App\Http\Helpers\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $cartItems = Cart::getCartItems();
-        $ids = Arr::pluck($cartItems, 'product_id');
-        $products = Product::whereIn('id', $ids)->get();
-        $cartItems = Arr::keyBy($cartItems, 'product_id');
+       list($products, $cartItems) = Cart::getProductsAndCartItems();
+
         $total = 0;
 
         foreach ($products as $product) {
@@ -134,5 +131,5 @@ class CartController extends Controller
 
             return response(['count' => Cart::getCountFromItems($cartItems)]);
         }
-    }
+    } 
 }
