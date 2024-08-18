@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Products from "../views/Products/Products.vue";
+import Orders from "../views/Orders/Orders.vue";
+import OrderView from "../views/Orders/OrderView.vue";
 import Login from "../views/Login.vue";
 import RequestPassword from "../views/RequestPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
@@ -28,6 +30,16 @@ const routes = [
                 name: 'app.products',
                 component: Products
             },
+            {
+                path: 'orders',
+                name: 'app.orders',
+                component: Orders
+            },
+            {
+                path: 'orders/:id',
+                name: 'app.orders.view',
+                component: OrderView
+            },
             // {
             //     path: 'products/create',
             //     name: 'app.products.create',
@@ -37,7 +49,7 @@ const routes = [
     },
     {
         path: "/login",
-        name: "login",
+        name: "Login",
         component: Login,
         meta: {
             requiresGuest: true
