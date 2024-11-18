@@ -8,7 +8,6 @@ use App\Http\Resources\OrderListResource;
 use App\Http\Resources\OrderResource;
 use App\Mail\OrderUpdateEmail;
 use App\Models\Order;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller

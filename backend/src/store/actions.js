@@ -25,6 +25,8 @@ export function logout({ commit }) {
         })
 }
 
+// Products
+
 export function getProducts({ commit, state }, { url = null, search = null, per_page = 10, sort_field, sort_direction } = {}) {
     commit('setProducts', [true])
     url = url || 'products'
@@ -48,35 +50,8 @@ export function getProducts({ commit, state }, { url = null, search = null, per_
         })
 }
 
-export function getOrders({ commit, state }, { url = null, search = null, per_page = 10, sort_field, sort_direction } = {}) {
-    commit('setOrders', [true])
-    url = url || 'orders'
-    const params = {
-        per_page: state.orders.limit
-    }
-    return axiosClient.get(url, {
-        params: {
-            ...params,
-            search,
-            per_page,
-            sort_field,
-            sort_direction
-        }
-    })
-        .then(res => {
-            commit('setOrders', [false, res.data])
-        })
-        .catch(() => {
-            commit('setOrders', [false])
-        })
-}
-
 export function getProduct({ commit }, id) {
     return axiosClient.get(`/products/${id}`)
-}
-
-export function getOrder({ commit }, id) {
-    return axiosClient.get(`/orders/${id}`)
 }
 
 export function createProduct({ commit }, product) {
@@ -109,4 +84,66 @@ export function updateProduct({ commit }, product) {
 
 export function deleteProduct({ commit }, id) {
     return axiosClient.delete(`/products/${id}`)
+}
+
+// Orders
+
+export function getOrders({ commit, state }, { url = null, search = null, per_page = 10, sort_field, sort_direction } = {}) {
+    commit('setOrders', [true])
+    url = url || 'orders'
+    const params = {
+        per_page: state.orders.limit
+    }
+    return axiosClient.get(url, {
+        params: {
+            ...params,
+            search,
+            per_page,
+            sort_field,
+            sort_direction
+        }
+    })
+        .then(res => {
+            commit('setOrders', [false, res.data])
+        })
+        .catch(() => {
+            commit('setOrders', [false])
+        })
+}
+
+export function getOrder({ commit }, id) {
+    return axiosClient.get(`/orders/${id}`)
+}
+
+// Users
+export function getUsers({ commit, state }, { url = null, search = '', per_page, sort_field, sort_direction } = {}) {
+    commit('setUsers', [true])
+    url = url || '/users'
+    const params = {
+        per_page: state.users.limit,
+    }
+    return axiosClient.get(url, {
+        params: {
+            ...params,
+            search, per_page, sort_field, sort_direction
+        }
+    })
+        .then((response) => {
+            commit('setUsers', [false, response.data])
+        })
+        .catch(() => {
+            commit('setUsers', [false])
+        })
+}
+
+export function createUser({ commit }, user) {
+    return axiosClient.post('/users', user)
+}
+
+export function updateUser({ commit }, user) {
+    return axiosClient.put(`/users/${user.id}`, user)
+}
+
+export function deleteUser({ commit }, id) {
+    return axiosClient.delete(`/users/${id}`)
 }
